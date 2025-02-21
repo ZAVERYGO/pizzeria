@@ -14,5 +14,6 @@
         <module>eureka-server</module>
         <module>user-service</module>
         <module>project-repository</module>
+        <module>api-gateway</module>
     </modules>
 </project>
