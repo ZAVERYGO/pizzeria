@@ -128,6 +128,6 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Override
     public UserEntity getMyCabinet() {
-        return userService.getById(userHolder.getUser().getUsername());
+        return userService.getById(UUID.fromString(userHolder.getUser().getUsername()));
     }
 }

@@ -57,7 +57,7 @@ public class MessageServiceImpl implements MessageService {
 
         Long dateTime = message.getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
         if (!dateTime.equals(dtUpdate)) {
-            throw new UpdateСonflictException("Пользователь уже был изменен");
+            throw new UpdateСonflictException("Сообщение уже было изменено");
         }
 
         return messageRepository.saveAndFlush(message

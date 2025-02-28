@@ -3,6 +3,8 @@ package com.kozich.userservice.controller.exceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
+import com.kozich.userservice.core.exception.ForbiddenException;
+import com.kozich.userservice.core.exception.UpdateСonflictException;
 import feign.FeignException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,12 @@ public class DefaultAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
+    @ExceptionHandler({ForbiddenException.class})
+    public ResponseEntity<ErrorResponse> forbiddenException(ForbiddenException e) {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class, UpdateСonflictException.class})
     public ResponseEntity<ErrorResponse> illegalArgException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse("error", e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

@@ -3,12 +3,13 @@ package com.kozich.userservice.util;
 import com.kozich.userservice.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public class CustomUserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private final UserEntity userEntity;
     private final List<SimpleGrantedAuthority> simpleGrantedAuthorities;
@@ -26,8 +27,8 @@ public class CustomUserDetails {
         return userEntity.getPassword();
     }
 
-    public UUID getUsername() {
-        return userEntity.getUuid();
+    public String getUsername() {
+        return userEntity.getUuid().toString();
     }
 
     public boolean isAccountNonExpired() {

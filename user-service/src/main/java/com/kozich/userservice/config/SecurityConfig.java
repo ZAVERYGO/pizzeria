@@ -5,6 +5,7 @@ import com.kozich.userservice.controller.filter.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,13 +41,16 @@ public class SecurityConfig {
                 }));
 
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/users/**").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/users/{uuid}").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/users").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/users").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/{uuid}/dt_update/{dt_update}").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/{uuid}/dt_update/{dt_update}").hasAnyRole("ADMIN")
                 .requestMatchers("/cabinet/registration").permitAll()
                 .requestMatchers("/cabinet/verification").permitAll()
                 .requestMatchers("/cabinet/login").permitAll()
                 .requestMatchers("/cabinet/me").authenticated()
                 .requestMatchers("/feign/*").permitAll()
-
                 .anyRequest().authenticated()
         );
 

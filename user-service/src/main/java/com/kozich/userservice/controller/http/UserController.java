@@ -1,11 +1,14 @@
 package com.kozich.userservice.controller.http;
 
 import com.kozich.projectrepository.core.dto.PageDTO;
+import com.kozich.projectrepository.core.enums.UserRole;
 import com.kozich.userservice.core.dto.UserCUDTO;
 import com.kozich.userservice.core.dto.UserDTO;
+import com.kozich.userservice.core.exception.ForbiddenException;
 import com.kozich.userservice.entity.UserEntity;
 import com.kozich.userservice.mapper.UserMapper;
 import com.kozich.userservice.service.api.UserService;
+import com.kozich.userservice.util.UserHolder;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -25,10 +28,12 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final UserHolder userHolder;
 
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService, UserMapper userMapper, UserHolder userHolder) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.userHolder = userHolder;
     }
 
     @GetMapping("/{uuid}")
@@ -77,6 +82,18 @@ public class UserController {
                        @PathVariable(value = "uuid") UUID uuid,
                        @PathVariable(value = "dt_update") Long dtUpdate) {
         userService.update(uuid, userCDTO, dtUpdate);
+    }
+
+    @DeleteMapping("/{uuid}/dt_update/{dt_update}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable(value = "uuid") UUID uuid,
+                       @PathVariable(value = "dt_update") Long dtUpdate) {
+        if (userHolder.getUserRole().equals(UserRole.ROLE_USER.name())
+            && !userHolder.getUser().getUsername().equals(uuid.toString())) {
+            throw new ForbiddenException();
+        }
+
+        userService.delete(uuid, dtUpdate);
     }
 
 }

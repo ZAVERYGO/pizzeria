@@ -1,6 +1,7 @@
 package com.kozich.userservice.service.impl;
 
 import com.kozich.userservice.core.dto.UserCUDTO;
+import com.kozich.userservice.core.exception.UpdateСonflictException;
 import com.kozich.userservice.service.api.UserService;
 import com.kozich.userservice.entity.UserEntity;
 import com.kozich.userservice.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
         Long dateTime = userEntity.get().getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
         if (!dateTime.equals(dtUpdate)) {
-            throw new IllegalArgumentException("Пользователь уже был изменен");
+            throw new UpdateСonflictException("Пользователь уже был изменен");
         }
 
         Optional<UserEntity> byEmail = userRepository.findByEmail(userCUDTO.getEmail());
@@ -106,8 +108,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByEmail(email);
     }
 
+    @Transactional
     @Override
-    public void delete(UUID uuid) {
+    public void delete(UUID uuid, Long dtUpdate) {
+
+        UserEntity userEntity = userRepository.getById(uuid);
+        if (Objects.isNull(userEntity)) {
+            throw new IllegalArgumentException("Не существует такого пользователя");
+        }
+
+        Long dateTime = userEntity.getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
+        if (!dateTime.equals(dtUpdate)) {
+            throw new UpdateСonflictException("пользователя был изменена");
+        }
+
         userRepository.deleteById(uuid);
     }
 

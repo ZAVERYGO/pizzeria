@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
         this.jwtHandler = jwtHandler;
     }
 
-    @Override
+
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain)

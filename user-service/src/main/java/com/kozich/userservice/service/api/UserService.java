@@ -21,6 +21,6 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
-    void delete(UUID uuid);
+    void delete(UUID uuid, Long dtUpdate);
 
 }

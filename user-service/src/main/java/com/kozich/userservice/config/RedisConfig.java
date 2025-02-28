@@ -8,6 +8,8 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.UUID;
+
 @Configuration
 public class RedisConfig {
 
@@ -24,8 +26,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public <K, V> RedisTemplate<K, V> redisTemplate() {
-        RedisTemplate<K, V> template = new RedisTemplate<>();
+    public RedisTemplate<UUID, Integer> redisTemplate() {
+        RedisTemplate<UUID, Integer> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
         return template;
     }
