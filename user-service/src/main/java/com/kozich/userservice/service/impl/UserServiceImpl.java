@@ -112,12 +112,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UUID uuid, Long dtUpdate) {
 
-        UserEntity userEntity = userRepository.getById(uuid);
-        if (Objects.isNull(userEntity)) {
+        Optional<UserEntity> userEntity = userRepository.getByUuid(uuid);
+        if (userEntity.isEmpty()) {
             throw new IllegalArgumentException("Не существует такого пользователя");
         }
 
-        Long dateTime = userEntity.getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
+        Long dateTime = userEntity.get().getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
         if (!dateTime.equals(dtUpdate)) {
             throw new UpdateСonflictException("пользователя был изменена");
         }

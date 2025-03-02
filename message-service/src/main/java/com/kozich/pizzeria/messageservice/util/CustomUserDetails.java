@@ -3,12 +3,13 @@ package com.kozich.pizzeria.messageservice.util;
 import com.kozich.projectrepository.core.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public class CustomUserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private final UserDTO userDTO;
     private final List<SimpleGrantedAuthority> simpleGrantedAuthorities;
@@ -26,8 +27,8 @@ public class CustomUserDetails {
         return userDTO.getPassword();
     }
 
-    public UUID getUsername() {
-        return userDTO.getUuid();
+    public String getUsername() {
+        return userDTO.getUuid().toString();
     }
 
     public boolean isAccountNonExpired() {

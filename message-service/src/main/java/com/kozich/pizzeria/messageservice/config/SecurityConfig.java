@@ -39,7 +39,7 @@ public class SecurityConfig {
                 }));
 
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/message/**").hasAnyRole("ADMIN")
+                .requestMatchers("/message").hasAnyRole("ADMIN")
 
                 .anyRequest().authenticated()
         );
