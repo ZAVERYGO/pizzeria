@@ -22,7 +22,7 @@ CREATE TABLE app.product
     dt_create TIMESTAMP NOT NULL,
     dt_update TIMESTAMP NOT NULL,
     CONSTRAINT product_uuid_pk PRIMARY KEY (uuid),
-    FOREIGN KEY (uuid) REFERENCES category (uuid)
+    FOREIGN KEY (category_uuid) REFERENCES app.category (uuid)
 );
 
 --changeset author:id4
