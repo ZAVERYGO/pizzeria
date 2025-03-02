@@ -16,6 +16,15 @@ public class ProductEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "composition", nullable = false)
+    private String composition;
+
+    @Column(name = "price", nullable = false)
+    private Integer price;
+
+    @Column(name = "currency", nullable = false)
+    private String currency;
+
     @ManyToOne
     @JoinColumn(name="category_uuid")
     private CategoryEntity categoryId;
