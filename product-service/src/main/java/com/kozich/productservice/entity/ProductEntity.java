@@ -39,9 +39,12 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(UUID uuid, String name, CategoryEntity categoryId, LocalDateTime dtCreate, LocalDateTime dtUpdate) {
+    public ProductEntity(UUID uuid, String name, String composition, Integer price, String currency, CategoryEntity categoryId, LocalDateTime dtCreate, LocalDateTime dtUpdate) {
         this.uuid = uuid;
         this.name = name;
+        this.composition = composition;
+        this.price = price;
+        this.currency = currency;
         this.categoryId = categoryId;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;
@@ -89,6 +92,33 @@ public class ProductEntity {
 
     public ProductEntity setDtUpdate(LocalDateTime dtUpdate) {
         this.dtUpdate = dtUpdate;
+        return this;
+    }
+
+    public String getComposition() {
+        return composition;
+    }
+
+    public ProductEntity setComposition(String composition) {
+        this.composition = composition;
+        return this;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public ProductEntity setPrice(Integer price) {
+        this.price = price;
+        return this;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public ProductEntity setCurrency(String currency) {
+        this.currency = currency;
         return this;
     }
 }

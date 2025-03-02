@@ -6,7 +6,7 @@ CREATE SCHEMA app
 CREATE TABLE app.category
 (
     uuid    uuid,
-    name    character varying NOT NULL,
+    name    character varying NOT NULL UNIQUE ,
     dt_create TIMESTAMP NOT NULL,
     dt_update TIMESTAMP NOT NULL,
     CONSTRAINT category_uuid_pk PRIMARY KEY (uuid)
@@ -17,7 +17,7 @@ CREATE TABLE app.category
 CREATE TABLE app.product
 (
     uuid    uuid,
-    name    character varying NOT NULL,
+    name    character varying NOT NULL UNIQUE ,
     composition    character varying NOT NULL,
     price    integer NOT NULL,
     currency    varchar(3) NOT NULL,
