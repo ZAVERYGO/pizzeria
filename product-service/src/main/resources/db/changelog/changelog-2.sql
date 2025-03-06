@@ -21,7 +21,7 @@ CREATE TABLE app.product
     composition    character varying NOT NULL,
     price    integer NOT NULL,
     currency    varchar(3) NOT NULL,
-    category_uuid uuid  NOT NULL,
+    category_uuid uuid  ,
     dt_create TIMESTAMP NOT NULL,
     dt_update TIMESTAMP NOT NULL,
     CONSTRAINT product_uuid_pk PRIMARY KEY (uuid),

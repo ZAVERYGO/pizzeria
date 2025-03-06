@@ -66,6 +66,11 @@ public class CategoryServiceImpl implements CategoryService {
             throw new IllegalArgumentException("категории не существует");
         }
 
+        if (!categoryEntity.get().getName().equals(сategoryCUDTO.getName())
+                && categoryRepository.getByName(сategoryCUDTO.getName()).isPresent()) {
+            throw new IllegalArgumentException("категория уже существует");
+        }
+
         Long dateTime = categoryEntity.get().getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
         if (!dateTime.equals(dtUpdate)) {
             throw new UpdateСonflictException("категория была изменена");

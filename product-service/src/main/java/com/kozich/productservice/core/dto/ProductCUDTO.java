@@ -1,15 +1,15 @@
 package com.kozich.productservice.core.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kozich.productservice.entity.CategoryEntity;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +26,7 @@ public class ProductCUDTO {
     @NotEmpty
     private String composition;
 
-    @NotBlank
-    @NotEmpty
+    @NotNull
     @Positive
     private Integer price;
 
@@ -36,9 +35,14 @@ public class ProductCUDTO {
     @NotEmpty
     private String currency;
 
-    @NotBlank
-    @NotEmpty
-    private CategoryEntity categoryId;
+    @JsonProperty("category_uuid")
+    @NotNull
+    private UUID categoryId;
+
+    public ProductCUDTO setCurrency(String currency) {
+        this.currency = currency != null ? currency.toUpperCase() : null;
+        return this;
+    }
 
 }
 

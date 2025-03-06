@@ -2,8 +2,10 @@ package com.kozich.productservice.service.impl;
 
 import com.kozich.productservice.core.dto.ProductCUDTO;
 import com.kozich.productservice.core.exception.UpdateСonflictException;
+import com.kozich.productservice.entity.CategoryEntity;
 import com.kozich.productservice.entity.ProductEntity;
 import com.kozich.productservice.repository.ProductRepository;
+import com.kozich.productservice.service.api.CategoryService;
 import com.kozich.productservice.service.api.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +23,11 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService) {
         this.productRepository = productRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -34,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductEntity> getPageByCategory(UUID catagoryUUID, Integer page, Integer size) {
+        categoryService.getById(catagoryUUID);
         return productRepository.getAllByCategoryId(PageRequest.of(page, size), catagoryUUID);
     }
 
@@ -49,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
         if (productRepository.getByName(productCUDTO.getName()).isPresent()) {
             throw new IllegalArgumentException("продукт уже существует");
         }
-
+        CategoryEntity categoryEntity = categoryService.getById(productCUDTO.getCategoryId());
         LocalDateTime date = LocalDateTime.now();
 
         ProductEntity userEntity = new ProductEntity()
@@ -60,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
                 .setCurrency(productCUDTO.getCurrency())
                 .setDtCreate(date)
                 .setDtUpdate(date)
-                .setCategoryId(productCUDTO.getCategoryId());
+                .setCategoryId(categoryEntity);
 
         return productRepository.saveAndFlush(userEntity);
     }
@@ -74,18 +79,24 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("продукта не существует");
         }
 
+        if (!productEntity.get().getName().equals(productCUDTO.getName())
+            && productRepository.getByName(productCUDTO.getName()).isPresent()) {
+            throw new IllegalArgumentException("продукт уже существует");
+        }
+
+        CategoryEntity categoryEntity = categoryService.getById(productCUDTO.getCategoryId());
+
         Long dateTime = productEntity.get().getDtUpdate().atZone(ZoneId.systemDefault()).toEpochSecond();
         if (!dateTime.equals(dtUpdate)) {
             throw new UpdateСonflictException("продукт был изменен");
         }
 
         ProductEntity resEntity = productEntity.get()
-                .setUuid(UUID.randomUUID())
                 .setName(productCUDTO.getName())
                 .setComposition(productCUDTO.getComposition())
                 .setPrice(productCUDTO.getPrice())
                 .setCurrency(productCUDTO.getCurrency())
-                .setCategoryId(productCUDTO.getCategoryId());
+                .setCategoryId(categoryEntity);
 
         return productRepository.saveAndFlush(resEntity);
     }
