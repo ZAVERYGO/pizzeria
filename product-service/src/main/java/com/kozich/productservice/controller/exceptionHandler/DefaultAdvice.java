@@ -1,10 +1,10 @@
-package com.kozich.userservice.controller.exceptionHandler;
+package com.kozich.productservice.controller.exceptionHandler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
-import com.kozich.userservice.core.exception.ForbiddenException;
-import com.kozich.userservice.core.exception.UpdateСonflictException;
+import com.kozich.productservice.core.exception.ForbiddenException;
+import com.kozich.productservice.core.exception.UpdateСonflictException;
 import feign.FeignException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
@@ -23,7 +23,7 @@ public class DefaultAdvice {
     private static final String MESSAGE_400 = "Запрос содержит некорректные данные. Измените запрос и отправьте его ещё раз";
     private static final String MESSAGE_500 = "Сервер не смог корректно обработать запрос. Пожалуйста обратитесь к администратору";
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class,
+    @ExceptionHandler({ValidationException.class, MethodArgumentNotValidException.class, ConstraintViolationException.class,
             HttpMessageNotReadableException.class, ValueInstantiationException.class})
     public ResponseEntity<ErrorResponse> validaException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse("error",
