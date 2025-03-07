@@ -17,5 +17,6 @@
         <module>message-service</module>
         <module>product-service</module>
         <module>api-gateway</module>
+        <module>order-service</module>
     </modules>
 </project>
