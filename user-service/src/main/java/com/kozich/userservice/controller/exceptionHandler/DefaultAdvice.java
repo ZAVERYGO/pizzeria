@@ -45,19 +45,18 @@ public class DefaultAdvice {
     @ExceptionHandler({FeignException.class})
     public ResponseEntity<ErrorResponse> exception(FeignException e) {
         ErrorResponse errorResponse = new ErrorResponse("error", MESSAGE_500);
-        int status = e.status();
         HttpStatus responseError = HttpStatus.INTERNAL_SERVER_ERROR;
         ObjectMapper objectMapper = new ObjectMapper();
-        if (status == 400) {
-            try {
-                errorResponse.setMessage(
-                        objectMapper.readValue(String.valueOf(e.contentUTF8()),
-                                ErrorResponse.class).getMessage()
-                );
-                responseError = HttpStatus.BAD_REQUEST;
-            } catch (JsonProcessingException ignored) {
-                log.error("Ошибка десериализации");
-            }
+        HttpStatus resolve = HttpStatus.resolve(e.status());
+
+        try {
+            errorResponse.setMessage(
+                    objectMapper.readValue(String.valueOf(e.contentUTF8()),
+                            ErrorResponse.class).getMessage()
+            );
+            responseError = resolve;
+        } catch (JsonProcessingException ignored) {
+            log.error("Ошибка десериализации");
         }
 
         return new ResponseEntity<>(errorResponse, responseError);
