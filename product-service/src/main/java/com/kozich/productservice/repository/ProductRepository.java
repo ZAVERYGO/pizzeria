@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
 
-    Page<ProductEntity> getAllByCategoryId(PageRequest pageRequest, UUID categoryUUID);
+    Page<ProductEntity> getAllByCategoryId(PageRequest pageRequest, CategoryEntity categoryUUID);
 
     Optional<ProductEntity> getByName(String name);
 }
