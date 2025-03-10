@@ -1,8 +1,6 @@
 package com.kozich.orderservice.entity;
 
 import com.kozich.orderservice.core.enums.OrderStatus;
-import com.kozich.projectrepository.core.enums.UserRole;
-import com.kozich.projectrepository.core.enums.UserStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "order", schema = "app")
+@NamedEntityGraph(name = "order_entity-graph", attributeNodes = @NamedAttributeNode("orderItems"))
 public class OrderEntity {
 
     @Id
@@ -34,7 +33,7 @@ public class OrderEntity {
     @Column(name = "dt_Update", nullable = false)
     private LocalDateTime dtUpdate;
 
-    @OneToMany(mappedBy="orderUUID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="orderUUID")
     private List<OrderItemEntity> orderItems;
 
     public OrderEntity() {

@@ -15,16 +15,21 @@ public class OrderItemEntity {
     @Column(name = "product_uuid")
     private UUID productUUID;
 
-    @ManyToOne
+    @Column(name = "number", nullable = false)
+    private Integer number;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_uuid")
     private OrderEntity orderUUID;
 
     public OrderItemEntity() {
     }
 
-    public OrderItemEntity(UUID uuid, UUID productUUID, OrderEntity orderUUID) {
+    public OrderItemEntity(UUID uuid, UUID productUUID, Integer number, OrderEntity orderUUID) {
         this.uuid = uuid;
         this.productUUID = productUUID;
+        this.number = number;
         this.orderUUID = orderUUID;
     }
 
@@ -52,6 +57,15 @@ public class OrderItemEntity {
 
     public OrderItemEntity setOrderUUID(OrderEntity orderUUID) {
         this.orderUUID = orderUUID;
+        return this;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public OrderItemEntity setNumber(Integer number) {
+        this.number = number;
         return this;
     }
 }
