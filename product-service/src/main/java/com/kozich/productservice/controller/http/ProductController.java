@@ -1,12 +1,11 @@
 package com.kozich.productservice.controller.http;
 
-import com.kozich.productservice.controller.mapper.ProductMapper;
+import com.kozich.productservice.mapper.ProductMapper;
 import com.kozich.productservice.core.dto.ProductCUDTO;
-import com.kozich.productservice.core.dto.ProductDTO;
 import com.kozich.productservice.entity.ProductEntity;
 import com.kozich.productservice.service.api.ProductService;
-import com.kozich.productservice.util.UserHolder;
 import com.kozich.projectrepository.core.dto.PageDTO;
+import com.kozich.projectrepository.core.dto.ProductDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;

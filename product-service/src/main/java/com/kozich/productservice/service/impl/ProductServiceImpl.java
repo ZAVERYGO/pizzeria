@@ -38,8 +38,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductEntity> getPageByCategory(UUID catagoryUUID, Integer page, Integer size) {
-        categoryService.getById(catagoryUUID);
-        return productRepository.getAllByCategoryId(PageRequest.of(page, size), catagoryUUID);
+        CategoryEntity byId = categoryService.getById(catagoryUUID);
+        return productRepository.getAllByCategoryId(PageRequest.of(page, size), byId);
     }
 
     @Override

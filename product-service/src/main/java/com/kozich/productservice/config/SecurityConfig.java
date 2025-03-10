@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/category").hasAnyRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/{uuid}/dt_update/{dt_update}").hasAnyRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/{uuid}/dt_update/{dt_update}").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/feign/*").permitAll()
                 .anyRequest().authenticated()
         );
 

@@ -1,6 +1,6 @@
 package com.kozich.productservice.controller.http;
 
-import com.kozich.productservice.controller.mapper.CategoryMapper;
+import com.kozich.productservice.mapper.CategoryMapper;
 import com.kozich.productservice.core.dto.CategoryCUDTO;
 import com.kozich.productservice.core.dto.CategoryDTO;
 import com.kozich.productservice.entity.CategoryEntity;
