@@ -1,7 +1,6 @@
 package com.kozich.productservice.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kozich.productservice.entity.CategoryEntity;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

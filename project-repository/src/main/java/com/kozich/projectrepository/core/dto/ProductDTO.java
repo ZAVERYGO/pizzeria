@@ -1,15 +1,12 @@
-package com.kozich.productservice.core.dto;
+package com.kozich.projectrepository.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kozich.productservice.entity.CategoryEntity;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
