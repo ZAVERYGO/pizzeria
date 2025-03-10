@@ -1,4 +1,4 @@
-package com.kozich.productservice.controller.mapper;
+package com.kozich.productservice.mapper;
 
 import com.kozich.productservice.core.dto.CategoryDTO;
 import com.kozich.productservice.entity.CategoryEntity;

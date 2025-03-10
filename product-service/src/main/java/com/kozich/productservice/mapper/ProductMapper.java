@@ -1,9 +1,7 @@
-package com.kozich.productservice.controller.mapper;
+package com.kozich.productservice.mapper;
 
-import com.kozich.productservice.core.dto.CategoryDTO;
-import com.kozich.productservice.core.dto.ProductDTO;
-import com.kozich.productservice.entity.CategoryEntity;
 import com.kozich.productservice.entity.ProductEntity;
+import com.kozich.projectrepository.core.dto.ProductDTO;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
