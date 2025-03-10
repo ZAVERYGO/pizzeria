@@ -7,7 +7,6 @@ import com.kozich.userservice.core.exception.ForbiddenException;
 import com.kozich.userservice.core.exception.UpdateСonflictException;
 import feign.FeignException;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

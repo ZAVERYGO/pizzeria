@@ -33,7 +33,7 @@ public class OrderEntity {
     @Column(name = "dt_Update", nullable = false)
     private LocalDateTime dtUpdate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="orderUUID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderUUID")
     private List<OrderItemEntity> orderItems;
 
     public OrderEntity() {

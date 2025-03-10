@@ -15,10 +15,13 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<OrderEntity, UUID> {
     @EntityGraph(type = EntityGraph.EntityGraphType.LOAD, value = "order_entity-graph")
     Page<OrderEntity> findAll(Pageable pageable);
+
     @EntityGraph(type = EntityGraph.EntityGraphType.LOAD, value = "order_entity-graph")
     Optional<OrderEntity> findByUuid(UUID uuid);
+
     @EntityGraph(type = EntityGraph.EntityGraphType.LOAD, value = "order_entity-graph")
     Page<OrderEntity> findAllByUserUUID(UUID userUUID, PageRequest pageRequest);
+
     @EntityGraph(type = EntityGraph.EntityGraphType.LOAD, value = "order_entity-graph")
     Optional<OrderEntity> findByUuidAndUserUUID(UUID uuid, UUID userUUID);
 

@@ -20,7 +20,7 @@ public class OrderItemEntity {
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="order_uuid")
+    @JoinColumn(name = "order_uuid")
     private OrderEntity orderUUID;
 
     public OrderItemEntity() {

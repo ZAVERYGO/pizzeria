@@ -9,7 +9,6 @@ import com.kozich.productservice.service.api.CategoryService;
 import com.kozich.productservice.service.api.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (!productEntity.get().getName().equals(productCUDTO.getName())
-            && productRepository.getByName(productCUDTO.getName()).isPresent()) {
+                && productRepository.getByName(productCUDTO.getName()).isPresent()) {
             throw new IllegalArgumentException("продукт уже существует");
         }
 
