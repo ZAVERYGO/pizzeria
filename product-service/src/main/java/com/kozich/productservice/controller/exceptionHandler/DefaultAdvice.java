@@ -1,10 +1,13 @@
-package com.kozich.pizzeria.messageservice.controller.exceptionHandler;
+package com.kozich.productservice.controller.exceptionHandler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
+import com.kozich.productservice.core.exception.ForbiddenException;
+import com.kozich.productservice.core.exception.UpdateСonflictException;
 import feign.FeignException;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +23,7 @@ public class DefaultAdvice {
     private static final String MESSAGE_400 = "Запрос содержит некорректные данные. Измените запрос и отправьте его ещё раз";
     private static final String MESSAGE_500 = "Сервер не смог корректно обработать запрос. Пожалуйста обратитесь к администратору";
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class,
+    @ExceptionHandler({ValidationException.class, MethodArgumentNotValidException.class, ConstraintViolationException.class,
             HttpMessageNotReadableException.class, ValueInstantiationException.class})
     public ResponseEntity<ErrorResponse> validaException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse("error",
@@ -28,7 +31,12 @@ public class DefaultAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
+    @ExceptionHandler({ForbiddenException.class})
+    public ResponseEntity<ErrorResponse> forbiddenException(ForbiddenException e) {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class, UpdateСonflictException.class})
     public ResponseEntity<ErrorResponse> illegalArgException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse("error", e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
